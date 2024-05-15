@@ -74,3 +74,18 @@
     @apply bg-background text-foreground;
   }
 }
+.navbar {
+  background-color: #ede0d4;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.navbar ul {
+  gap:1rem;
+  
+}
+
+.navbar li {
+  float: left;
+}

@@ -1,0 +1,37 @@
+.navbar {
+    background-color: #333;
+    /* Background color of the navbar */
+    overflow: hidden;
+    /* Ensure that content does not overflow */
+}
+
+.navbar ul {
+    list-style-type: none;
+    /* Remove default bullet points */
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    float: left;
+    /* Float list items horizontally */
+}
+
+.navbar li Link {
+    display: block;
+    /* Make anchor tags full width of their parent list item */
+    color: white;
+    /* Text color */
+    text-align: center;
+    /* Center align text */
+    padding: 14px 16px;
+    /* Padding around text */
+    text-decoration: none;
+    /* Remove underline */
+}
+
+/* Change background color of anchor tag when hovered */
+.navbar li Link:hover {
+    background-color: #ddd;
+    color: black;
+}
