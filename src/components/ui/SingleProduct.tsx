@@ -1,5 +1,6 @@
 import { Product } from "@/types";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SingleProduct = (props: { product: Product }) => {
     const { product } = props
@@ -12,10 +13,13 @@ const SingleProduct = (props: { product: Product }) => {
                 <p className="product_description">{product.description}</p>
                 <p className="product_price">Price: {product.price}</p>
                 <div>
-                    <button className= "btn product_btn">
+                    
+                    <Link to={`/products/${product.productId}`}>
+                        <button className= "btn product_btn">
                         Show Details 
                         <i className="fa fa-eye" aria-hidden="true"></i>
-                    </button>
+                        </button>
+                    </Link>
                     <button className= "btn product_btn">
                         Add To Cart
                         <i className="fa fa-shopping-cart" aria-hidden="true"></i>
