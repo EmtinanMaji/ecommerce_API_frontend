@@ -70,7 +70,7 @@ const productSlice = createSlice({
             (action) => action.type.endsWith("/rejected"),
             (state, action) => {
                 state.error = "An error occured"
-            state.isLoading = false
+                state.isLoading = false
             }
         )
 

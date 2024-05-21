@@ -33,3 +33,38 @@ export type ProductState = {
   error: null | string
   isLoading: boolean
 }
+
+//User
+export type User = {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  image?: string;
+  isAdmin?: true;
+  isBanned?: true;
+  createdAt?: string;
+}
+
+export type UserState = {
+  error: null | string
+  isLoading: boolean
+  userData: null | User
+  token: null | string
+  isLoggedIn: boolean
+}
+
+export type LoginFormData = {
+    email: string
+    password: string
+}
+
+export type CustomError = {
+  massage: string
+}
+
+export type LoginData = {
+    isLoggedIn: boolean;
+    userData: User | null;
+    token: string;
+}

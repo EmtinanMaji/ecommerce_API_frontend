@@ -17,6 +17,9 @@ import "./App.css"
 import { useEffect } from "react"
 import Index from "./routes"
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+  
 function App() {
   /*
   const getProducts = async () => {
@@ -43,6 +46,7 @@ function App() {
 */
   return (
     <div className="App">
+      <ToastContainer />
       <Index />
     </div>
   )

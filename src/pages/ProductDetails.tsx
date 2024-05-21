@@ -29,11 +29,11 @@ export const ProductDetails = () =>{
                     {product && <div>
                         <img src={product.imageUrl} alt={product.name} className="product-details__img"/>
                         <div className="product-details__bady">
-                            <h3 className="product-details__name">{product.name}</h3>
-                            <p className="product-details__description">{product.description}</p>
-                            <p className="product-details__quantity">{product.quantity}</p>
-                            <p className="product-details__sold">{product.sold}</p>
-                            <p className="product-details__price">{product.price}</p>
+                            <h3 className="product-details__name">Product Name: {product.name}</h3>
+                            <p className="product-details__description">Product description: {product.description}</p>
+                            <p className="product-details__quantity">Quantity: {product.quantity}</p>
+                            <p className="product-details__sold">Sold: {product.sold}</p>
+                            <p className="product-details__price">Price: {product.price} SAR</p>
                             <p>Product Added: {new Date(product.createdAt).toLocaleDateString()}</p>
                         </div>
                     </div>}
