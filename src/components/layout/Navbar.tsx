@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
     const dispatch: AppDispatch = useDispatch()
-    const {isLoading} = useSelector((state: RootState) => state.userR)
+    const {isLoggedIn} = useSelector((state: RootState) => state.userR)
     const handleLogout = () => {
         dispatch(logoutUser())
     }
@@ -16,14 +16,14 @@ export const Navbar = () => {
                 <li>
                     <Link to="/">Home</Link>
                 </li>
-                {isLoading && (
+                {isLoggedIn && (
                 <>
                     <li>
                         <Link to="/" onClick={handleLogout}>Logout</Link>
                     </li>
                 </>)}
 
-                {!isLoading && (
+                {!isLoggedIn && (
                 <>
                     <li>
                         <Link to="/register">Register</Link>

@@ -6,9 +6,9 @@ import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 
 const ProtectedRoute = () => {
-    const {isLoading} = useSelector((state: RootState) => state.userR)
+    const {isLoggedIn} = useSelector((state: RootState) => state.userR)
     return (
-        isLoading ? <Outlet /> : <Login />
+        isLoggedIn ? <Outlet /> : <Login />
     )
 }
 export default ProtectedRoute

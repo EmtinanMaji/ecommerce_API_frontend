@@ -13,12 +13,12 @@ const initialState: ProductState = {
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", 
     async ({pageNumber, pageSize, searchKeyword, sortBy }:{pageNumber: number, pageSize: number, searchKeyword : string, sortBy: string}) => {
-        const response = searchKeyword.length > 0 ? await api.get(`/products?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}`)
+        const response = searchKeyword.length > 0 ? await api.get(`/products?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}&sortBy=${sortBy}`)
         : await api.get(`/products?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`)
         return response.data;
  
 })
-export const fetchProductsBySlug = createAsyncThunk("products/fetchProductsBySlug", async (slug: string | undefined) => {
+export const fetchProductBySlug  = createAsyncThunk("products/fetchProductsBySlug", async (slug: string | undefined) => {
     
     const response = await api.get(`/products/${slug}`)
     //console.log(response.data);
@@ -49,7 +49,7 @@ const productSlice = createSlice({
             state.error = null
             state.isLoading = true
         })*/
-        builder.addCase(fetchProductsBySlug.fulfilled, (state, action) => {
+        builder.addCase(fetchProductBySlug.fulfilled, (state, action) => {
             state.product = action.payload.data
             state.isLoading = false
         })

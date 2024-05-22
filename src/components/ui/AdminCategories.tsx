@@ -1,0 +1,196 @@
+import AdminSidebar from "@/components/ui/AdminSidebar";
+import { AppDispatch, RootState } from "@/tookit/store";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import useCategoriesState from "@/hooks/useCategoriesState";
+import { createCategory, deleteCategory, fetchCategories, updateCategory } from "@/tookit/slices/categorySlice";
+import SingleCategory from "./SingleCategory";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Category, CreateCategoryFormData } from "@/types";
+
+export const AdminCategories = () => {
+    //access store for all the categories
+    const { categories, isLoading, error, totalPages } = useCategoriesState()
+
+    const dispatch: AppDispatch = useDispatch();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<CreateCategoryFormData>()
+
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(5);
+    const [searchKeyword, setSearchKeyword] = useState("")
+    const [sortBy, setSortBy] = useState("Name")
+    const [idEdit, setIdEdit] = useState(false)
+    const [categoryName, setCategoryName] = useState("")
+    const [categoryDescription, setCategoryDescription] = useState("")
+    const [selectedCategoryId, setSelectedCategoryId] = useState("")
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await dispatch(fetchCategories({pageNumber, pageSize, searchKeyword, sortBy }))
+        }
+        fetchData()
+    },[pageNumber, searchKeyword, sortBy]);
+
+    const handlePreviousPage = () => {
+        setPageNumber(currentPage => currentPage - 1)
+    }
+
+    const handleNaxtPage = () => {
+        setPageNumber(currentPage => currentPage + 1)
+    }
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchKeyword(e.target.value)
+    }
+
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortBy(e.target.value)
+    }
+
+    const onSubmit: SubmitHandler<CreateCategoryFormData> = async (data) => {
+        
+        try {
+            const response = await dispatch(createCategory(data))
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+        const handleDelete = async (id: string) => {
+        dispatch(deleteCategory(id))
+        try {
+            const response = await dispatch(deleteCategory(id))
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleEdit = async (categoryId: string, category: Category) => {
+        setIdEdit(true)
+        setCategoryName(category.name)
+        setSelectedCategoryId(categoryId)
+        setCategoryDescription(category.description)
+        //dispatch(deleteCategory(id))
+    }
+
+    const handleEditSubmit = (event: React.FormEvent) => {
+        event.preventDefault()
+        const updateCategoryData = {
+            name: categoryName,
+            description: categoryDescription
+        }
+        dispatch(
+            updateCategory({ updateCategoryData: updateCategoryData, categoryId: selectedCategoryId}))
+    }
+
+    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCategoryName(event.target.value)
+    }
+
+    const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setCategoryDescription(event.target.value)
+    }
+
+    return(
+            <div className="container">
+            <AdminSidebar />
+            <div className="main-container">
+            {isLoading && <p>Loading...</p>}
+            {error && <p>Eroor{error}</p>}
+            <div>
+                <input type="text" placeholder="Search Categories" value={searchKeyword} onChange={handleSearchChange} />
+                <p>Stor By:</p>
+                <select name="" id="" onChange={handleSortChange}>
+                    <option value="Name">Name</option>
+                    <option value="Price">Price</option>
+                </select>
+            </div>
+
+            <div>
+                <h2>Create Category</h2>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="form-field">
+                    <label htmlFor="name"> Name: </label>
+                    <input type="text" {... register("name",{
+                        required: "Name is required",
+                        minLength: {value: 2, message: "Name must be at least 2 characters"}
+                    })}/>
+                    {errors.name && <p> {errors.name.message} </p>}
+                    </div>
+
+                    <div className="form-field">
+                    <label htmlFor="description"> Description: </label>
+                    <textarea {... register("description")}></textarea>
+                    </div>
+
+                    <button className="btn" type="submit">
+                    Create Category
+                    </button>
+                    </form>
+            </div>
+                    {/* edit category  */}
+            <div>
+                <h2>Edit Category</h2>
+                <form onSubmit={handleEditSubmit}>
+                    <div className="form-field">
+                    <label htmlFor="categoryName"> Name: </label>
+                    <input name="name" value={categoryName} required onChange={handleNameChange}/>
+                    </div>
+
+                    <div className="form-field">
+                    <label htmlFor="categoryDescription"> Description: </label>
+                    <textarea name="categoryDescription" value={categoryDescription} onChange={handleDescriptionChange}></textarea>
+                    </div>
+
+                    <button className="btn" type="submit">
+                    Edit Category
+                    </button>
+                    </form>
+            </div>
+
+            <h2>List of categories: </h2>
+            <section className="categories">
+                {categories && categories.length > 0 &&
+                categories.map((category) => 
+                //<SingleCategory key={category.categoryId} category={category} />
+                <article className="category card" key={category.categoryId}>
+            <div className="category_bady">
+                <h3 className="category_name">{category.name}</h3>
+                <p className="category_description">{category.description.substring(0, 100)}...</p>
+            <div>
+                <button className= "btn" onClick={() => {handleEdit(category.categoryId, category)}}>
+                    Edit 
+                <i className="fa fa-eye" aria-hidden="true"></i>
+                </button>
+                
+                <button className= "btn" onClick={() => {handleDelete(category.categoryId)}}>
+                    Delete
+                <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                </button>
+                </div>
+            </div>
+        </article>
+                )}
+            </section>
+    
+            <div className="pagination">
+                <button onClick={handlePreviousPage} disabled={pageNumber == 1} >Previous</button>
+            {Array.from({ length: totalPages }, (_, index) => (
+                <button key={index} onClick={() => setPageNumber(index + 1)}>
+                    {index + 1}
+                </button>
+            ))}
+            <button onClick={handleNaxtPage} disabled={pageNumber == totalPages} >Next</button>
+            </div>
+    
+            </div>
+        </div>
+        
+            
+    );
+}

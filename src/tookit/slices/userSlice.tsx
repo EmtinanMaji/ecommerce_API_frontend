@@ -1,13 +1,19 @@
 
 import api from "@/api";
-import {LoginFormData, User, UserState} from "@/types";
+import {LoginFormData, UpdateProfileFormData, User, UserState} from "@/types";
+import { getLocalStorage, getToken, setLocalStorage } from "@/utils/localStorage";
 import {createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const data = 
+const data = getLocalStorage("loginData", {
+    userData: null,
+    token: null,
+    isLoggedIn: false
+})
+/*
     localStorage.getItem("loginData") != null
     ? JSON.parse(String(localStorage.getItem("loginData")))
     : []
-
+*/
 const initialState: UserState = {
     error: null,
     isLoading: false,
@@ -26,6 +32,17 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: Lo
     return response.data;
 })
 
+export const updateUser = createAsyncThunk("users/updateUser", 
+async ({updateUserData, userId}: {updateUserData: UpdateProfileFormData, userId: string}) => {
+    const token = getToken();
+    const response = await api.put(`/users/${userId}`, updateUserData, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    return response.data;
+})
+
 //cases: pending, fullfilled, rejected
 const userSlice = createSlice({
     name: "users",
@@ -36,30 +53,38 @@ const userSlice = createSlice({
             state.isLoading = false
             state.userData = null
             state.token = null
-            localStorage.setItem(
-                "loginData",
-                JSON.stringify({
-                    isLoggedIn: state.isLoggedIn,
-                    userData: state.userData,
-                    token: state.token
-                })
-            )
+            setLocalStorage("loginData", {
+                isLoggedIn: state.isLoggedIn,
+                userData: state.userData,
+                token: state.token
+                
+            })
         }
     }, 
     extraReducers(builder) {
         builder.addCase(loginUser.fulfilled, (state, action) => {
-            state.isLoggedIn = true
-            state.userData = action.payload.data.user
+            state.userData = action.payload.data.loggedInUser
             state.token = action.payload.data.token
+            state.isLoggedIn = true
             state.isLoading = false
-            localStorage.setItem(
-                "loginData",
-                JSON.stringify({
-                    isLoggedIn: state.isLoggedIn,
-                    userData: state.userData,
-                    token: state.token
+            setLocalStorage("loginData", {
+                isLoggedIn: state.isLoggedIn,
+                userData: state.userData,
+                token: state.token
+                
+            })
+        })
+        builder.addCase(updateUser.fulfilled, (state, action) => {
+            if(state.userData){
+                state.userData.name = action.payload.data.name
+                state.userData.address = action.payload.data.name
+                setLocalStorage("loginData", {
+                isLoggedIn: state.isLoggedIn,
+                userData: state.userData,
+                token: state.token
+                
                 })
-            )
+            }   
         })
 
         builder.addMatcher(

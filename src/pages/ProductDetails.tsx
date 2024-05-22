@@ -1,5 +1,5 @@
 import PageTitle from "@/components/ui/PageTitle";
-import { fetchProductsBySlug } from "@/tookit/slices/productSlice";
+import { fetchProductBySlug  } from "@/tookit/slices/productSlice";
 import { AppDispatch, RootState } from "@/tookit/store";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,7 @@ export const ProductDetails = () =>{
     console.log(product)
     useEffect(() => {
         const fetchData = async () => {
-            await dispatch(fetchProductsBySlug(slug))
+            await dispatch(fetchProductBySlug(slug))
         }
         fetchData()
     },[]);
@@ -35,6 +35,7 @@ export const ProductDetails = () =>{
                             <p className="product-details__sold">Sold: {product.sold}</p>
                             <p className="product-details__price">Price: {product.price} SAR</p>
                             <p>Product Added: {new Date(product.createdAt).toLocaleDateString()}</p>
+                            
                         </div>
                     </div>}
                 </section>

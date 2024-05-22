@@ -10,6 +10,13 @@ export type Category = {
     products: Product[];
 }
 
+export type CategoryState = {
+  categories: Category[]
+  totalPages: number
+  category : Category | null
+  error: null | string
+  isLoading: boolean
+}
 //products
 export type Product = {
     productId: string;
@@ -36,14 +43,15 @@ export type ProductState = {
 
 //User
 export type User = {
-  name: string;
-  email: string;
-  password: string;
-  address: string;
-  image?: string;
-  isAdmin?: true;
-  isBanned?: true;
-  createdAt?: string;
+  userId?: string
+  name: string
+  email: string
+  password: string
+  address: string
+  image?: string
+  isAdmin?: true
+  isBanned?: true
+  createdAt?: string
 }
 
 export type UserState = {
@@ -67,4 +75,23 @@ export type LoginData = {
     isLoggedIn: boolean;
     userData: User | null;
     token: string;
+}
+
+export type RegisterFormData = {
+    name: string
+    email: string
+    password: string
+    image: string
+    phone: string
+    address: string
+}
+
+export type UpdateProfileFormData = {
+    name: string
+    address: string
+}
+
+export type CreateCategoryFormData = {
+    name: string;
+    description: string;
 }
