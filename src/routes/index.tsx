@@ -12,7 +12,7 @@ import { AdminDashboard } from "@/pages/admins/AdminDashboard";
 import { UserProfile } from "@/pages/users/UserProfile";
 import { UserOrders } from "@/pages/users/UserOrders";
 import { AdminOrders } from "@/components/ui/AdminOrders";
-import { AdminUsers } from "@/pages/admins/AdminUsers";
+import { AdminUsersManagement } from "@/components/ui/AdminUsersManagement";
 import { AdminProducts } from "@/components/ui/AdminProducts";
 import { AdminCategories } from "@/components/ui/AdminCategories";
 import ProtectedRoute from "./ProtectedRoute";
@@ -30,15 +30,15 @@ const Index = () => {
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="/dashboard/user" element={<UserDashboard />} />
-                    <Route path="/dashboarduser/profile" element={<UserProfile/>} />
-                    <Route path="/dashboarduser/orders" element={<UserOrders />} />
+                    <Route path="/dashboard/user/profile" element={<UserProfile/>} />
+                    <Route path="/dashboard/user/orders" element={<UserOrders />} />
                 </Route>
 
                 <Route element={<AdminRoute />}>
                     <Route path="/dashboard/admin" element={<AdminDashboard />} />
                     <Route path="/dashboard/admin/categories" element={<AdminCategories />} />
                     <Route path="/dashboard/admin/products" element={<AdminProducts />} />
-                    <Route path="/dashboard/admin/users" element={<AdminUsers />} />
+                    <Route path="/dashboard/admin/users" element={<AdminUsersManagement />} />
                     <Route path="/dashboard/admin/orders" element={<AdminOrders />} />
                 </Route>
 

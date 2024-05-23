@@ -16,16 +16,18 @@ export const AdminCategories = () => {
     const {
         register,
         handleSubmit,
+        reset,
+        setValue,
         formState: { errors }
     } = useForm<CreateCategoryFormData>()
 
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize,] = useState(5);
     const [searchKeyword, setSearchKeyword] = useState("")
     const [sortBy, setSortBy] = useState("Name")
-    const [idEdit, setIdEdit] = useState(false)
-    const [categoryName, setCategoryName] = useState("")
-    const [categoryDescription, setCategoryDescription] = useState("")
+    const [isEdit, setIsEdit] = useState(false)
+    // const [categoryName, setCategoryName] = useState("")
+    // const [categoryDescription, setCategoryDescription] = useState("")
     const [selectedCategoryId, setSelectedCategoryId] = useState("")
 
     useEffect(() => {
@@ -54,48 +56,33 @@ export const AdminCategories = () => {
     const onSubmit: SubmitHandler<CreateCategoryFormData> = async (data) => {
         
         try {
-            const response = await dispatch(createCategory(data))
-            console.log(response)
+            if(isEdit){
+                await dispatch(updateCategory({updateCategoryData: data, categoryId: selectedCategoryId}))
+                setIsEdit(false)
+            }else{
+                await dispatch(createCategory(data))
+            }
+            reset()
         } catch (error) {
             console.log(error)
         }
     }
         const handleDelete = async (id: string) => {
-        dispatch(deleteCategory(id))
         try {
-            const response = await dispatch(deleteCategory(id))
-            console.log(response)
+            await dispatch(deleteCategory(id))
         } catch (error) {
             console.log(error)
         }
     }
 
-    const handleEdit = async (categoryId: string, category: Category) => {
-        setIdEdit(true)
-        setCategoryName(category.name)
-        setSelectedCategoryId(categoryId)
-        setCategoryDescription(category.description)
-        //dispatch(deleteCategory(id))
+    const handleEdit = async (category: Category) => {
+        setIsEdit(true)
+        setSelectedCategoryId(category.categoryId)
+        setValue("name", category.name)
+        setValue("description", category.description)
     }
 
-    const handleEditSubmit = (event: React.FormEvent) => {
-        event.preventDefault()
-        const updateCategoryData = {
-            name: categoryName,
-            description: categoryDescription
-        }
-        dispatch(
-            updateCategory({ updateCategoryData: updateCategoryData, categoryId: selectedCategoryId}))
-    }
-
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCategoryName(event.target.value)
-    }
-
-    const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setCategoryDescription(event.target.value)
-    }
-
+    
     return(
             <div className="container">
             <AdminSidebar />
@@ -110,9 +97,9 @@ export const AdminCategories = () => {
                     <option value="Price">Price</option>
                 </select>
             </div>
-
+{/* create or edite category */}
             <div>
-                <h2>Create Category</h2>
+                <h2>{isEdit ? "Edit Category" : "Create Category"}</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-field">
                     <label htmlFor="name"> Name: </label>
@@ -129,31 +116,43 @@ export const AdminCategories = () => {
                     </div>
 
                     <button className="btn" type="submit">
-                    Create Category
+                    {isEdit ? "Update Category" : "Create Category"}
                     </button>
                     </form>
             </div>
-                    {/* edit category  */}
-            <div>
-                <h2>Edit Category</h2>
-                <form onSubmit={handleEditSubmit}>
-                    <div className="form-field">
-                    <label htmlFor="categoryName"> Name: </label>
-                    <input name="name" value={categoryName} required onChange={handleNameChange}/>
-                    </div>
-
-                    <div className="form-field">
-                    <label htmlFor="categoryDescription"> Description: </label>
-                    <textarea name="categoryDescription" value={categoryDescription} onChange={handleDescriptionChange}></textarea>
-                    </div>
-
-                    <button className="btn" type="submit">
-                    Edit Category
-                    </button>
-                    </form>
-            </div>
-
             <h2>List of categories: </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {categories &&
+                        categories.length > 0 &&
+                        categories.map((category) => (
+                            <tr key={category.categoryId}>
+                                <td>{category.name}</td>
+                                <td>{category.description.substring(0,100)}...</td>
+                                <td>
+                                    <button className= "btn" 
+                                    onClick={() => {handleEdit(category)}}>
+                                    Edit
+                                    </button>
+                                    <button className= "btn" 
+                                    onClick={() => {handleDelete(category.categoryId)}}>
+                                    Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        )
+                    )}
+                </tbody>
+            </table>        
+
+            {/* <h2>List of categories: </h2>
             <section className="categories">
                 {categories && categories.length > 0 &&
                 categories.map((category) => 
@@ -163,7 +162,7 @@ export const AdminCategories = () => {
                 <h3 className="category_name">{category.name}</h3>
                 <p className="category_description">{category.description.substring(0, 100)}...</p>
             <div>
-                <button className= "btn" onClick={() => {handleEdit(category.categoryId, category)}}>
+                <button className= "btn" onClick={() => {handleEdit(category)}}>
                     Edit 
                 <i className="fa fa-eye" aria-hidden="true"></i>
                 </button>
@@ -176,7 +175,7 @@ export const AdminCategories = () => {
             </div>
         </article>
                 )}
-            </section>
+            </section> */}
     
             <div className="pagination">
                 <button onClick={handlePreviousPage} disabled={pageNumber == 1} >Previous</button>

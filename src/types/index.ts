@@ -49,12 +49,14 @@ export type User = {
   password: string
   address: string
   image?: string
-  isAdmin?: true
-  isBanned?: true
+  isAdmin?: boolean
+  isBanned?: boolean
   createdAt?: string
 }
 
 export type UserState = {
+  users:User []
+  totalPages: number
   error: null | string
   isLoading: boolean
   userData: null | User
