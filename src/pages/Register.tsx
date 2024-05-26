@@ -20,23 +20,23 @@ export const Register = () => {
         formState: { errors }
     } = useForm<RegisterFormData>()
 
-    //const [imagePreview, setImagePreview] = useState<string | null>(null)
+    const [imagePreview, setImagePreview] = useState<string | null>(null)
 
     const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
         try {
-            /*let imageUrl =""
+            let imageUrls =""
             if (data.image && data.image.length > 0) {
                 const file = data.image[0]
                 //upload the file to the cloudinary
-                imageUrl = await uploadImageToCloudinary(file)
+                imageUrls = await uploadImageToCloudinary(file)
             }
 
             const userData = {
                 ... data,
-                image: imageUrl
+                image: imageUrls
             }
-*/
-            const response = await dispatch(registerUser(data))
+
+            const response = await dispatch(registerUser(userData))
             //console.log("Response from Register: "+ response)
             toast.success(response.payload.message)
             navigate("/login")
@@ -44,14 +44,14 @@ export const Register = () => {
             toast.error(error.message || "Registration failed")
         }
     }
-/*
+
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
         if (file) {
             setImagePreview(URL.createObjectURL(file))
         }
     }
-  */  
+   
     return(
         <div>
             <PageTitle title="Register"/>
@@ -81,11 +81,13 @@ export const Register = () => {
                 </div>
 
 
-                {/* <div className="form-field"> 
+                <div className="form-field"> 
                     <label htmlFor="image"> Image: </label>
-                    <input type="file" accept="image/*" {... register("image")}/>
+                    <input type="file" accept="image/*" {... register("image")} onChange={handleImageChange}/>
+                    {imagePreview && <img src={imagePreview} alt="image preview"
+                    className="image-preview" />}
                 </div>
-*/}
+
                 <div className="form-field">
                     <label htmlFor="password"> Password: </label>
                     <input type="password" {... register("password",{

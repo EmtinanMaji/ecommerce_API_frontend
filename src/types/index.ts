@@ -1,36 +1,38 @@
-//api call from here
+// //api call from here
 
-//category
+// //category
 export type Category = {
-    categoryId: string;
-    name: string;
-    slug: string;
-    description: string;
-    createdAt: string;
-    products: Product[];
-}
+  categoryId: string
+  name: string
+  slug: string
+  description: string
+  createdAt: string
+  products?: Product[]
+};
+
 
 export type CategoryState = {
   categories: Category[]
   totalPages: number
-  category : Category | null
+  category: Category | null
   error: null | string
   isLoading: boolean
 }
-//products
+// //products
 export type Product = {
-    productId: string;
-    name: string;
-    slug: string;
-    imageUrl: string;
-    description: string;
-    price: number;
-    quantity: number;
-    sold: number;
-    shipping: number;
-    categoryId: string;
-    createdAt: string;
-    category: Category[];
+    productId: string
+    name: string
+    slug: string
+    imageUrl?: string
+    description: string
+    price: number
+    quantity: number
+    sold: number
+    shipping: number
+    categoryId: string
+    createdAt: string
+    category?: Category
+
 }
 
 export type ProductState = {
@@ -41,7 +43,8 @@ export type ProductState = {
   isLoading: boolean
 }
 
-//User
+
+// //User
 export type User = {
   userId?: string
   name: string
@@ -52,6 +55,7 @@ export type User = {
   isAdmin?: boolean
   isBanned?: boolean
   createdAt?: string
+  //order: Order[]
 }
 
 export type UserState = {
@@ -63,37 +67,99 @@ export type UserState = {
   token: null | string
   isLoggedIn: boolean
 }
-
 export type LoginFormData = {
-    email: string
-    password: string
-}
-
-export type CustomError = {
-  massage: string
+  email: string
+  password: string
 }
 
 export type LoginData = {
-    isLoggedIn: boolean;
-    userData: User | null;
-    token: string;
+  isLoggedIn: boolean
+  userData: User | null
+  token: string
 }
+
+// export type CustomError = {
+//   massage: string
+// }
 
 export type RegisterFormData = {
     name: string
     email: string
     password: string
-    image: string
+    //image: string
+    image: FileList
     phone: string
     address: string
 }
+
 
 export type UpdateProfileFormData = {
     name: string
     address: string
 }
 
+export type CreateProductFormData = {
+    name: string
+    imageUrl?: string
+    //imageUrl?: FileList
+    description: string
+    price: number
+    quantity: number
+    shipping: number
+    categoryId: string
+}
+// export type CreateProductForBackend = {
+//   name: string
+//   imageUrl: string 
+//   description: string
+//   price: number
+//   quantity: number
+//   shipping: number
+//   categoryId: string
+// }
 export type CreateCategoryFormData = {
     name: string;
     description: string;
 }
+
+
+// export type CartState = {
+//   cartItems: Product[]
+// }
+
+
+
+// export type OrderProduct = {
+//   orderProductId: string
+//   orderId: string
+//   productId: string
+//   productQuantity: number
+//   product: {
+//     productId: string
+//     name: string
+//     price: number
+//   }
+// }
+// export type Order = {
+//   orderId: string
+//   date: string
+//   userName: string
+//   userId?: string
+//   totalPrice: number
+//   orderStatus: string
+//   orderProducts: OrderProduct[]
+// }
+
+// export type OrderState = {
+//   orders: Order[]
+//   order: Order | null
+//   error: string | null
+//   isLoading: boolean
+// }
+
+// export type NewOrder = {
+//   userId?: string
+//   userName: string
+//   orderItems: { productId: string; quantity: number }[]
+//   totalPrice: number
+// }

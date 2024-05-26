@@ -1,6 +1,7 @@
 import React from "react";
 
 export const ProductSidebar = () =>{
+    
     return(
         <div className="sidebar">
             <div>

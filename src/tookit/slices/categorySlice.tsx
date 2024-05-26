@@ -36,8 +36,9 @@ export const createCategory = createAsyncThunk("categories/createCategory", asyn
             Authorization: `Bearer ${getToken()}`
         }
         })
-    return response.data.data
+    return response.data
 })
+
 export const updateCategory = createAsyncThunk("categories/updateCategory", 
 async ({updateCategoryData, categoryId}: {updateCategoryData: CreateCategoryFormData, categoryId: string}) => {
     const token = getToken();
@@ -63,10 +64,12 @@ const categorySlice = createSlice({
 
         builder.addCase(deleteCategory.fulfilled, (state, action) => {
             state.categories = state.categories.filter(category => category.categoryId != action.payload)
+            state.isLoading = false
         })
 
         builder.addCase(createCategory.fulfilled, (state, action) => {
             state.categories.push(action.payload)
+            state.isLoading = false
         })
 
         builder.addCase(updateCategory.fulfilled, (state, action) => {
@@ -76,6 +79,7 @@ const categorySlice = createSlice({
                 foundCategory.name = action.payload.data.name
                 foundCategory.description = action.payload.data.description
             } 
+            state.isLoading = false
         })
 
         builder.addMatcher(
