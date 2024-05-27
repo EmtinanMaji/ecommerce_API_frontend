@@ -32,15 +32,21 @@ export const Register = () => {
             }
 
             const userData = {
-                ... data,
+                ...data,
                 image: imageUrls
             }
+            console.log(userData)
 
             const response = await dispatch(registerUser(userData))
+            console.log(response)
             //console.log("Response from Register: "+ response)
-            toast.success(response.payload.message)
-            navigate("/login")
+            if(response.payload) {
+            toast.success("successful")
+                navigate("/login")
+
+            }
         } catch (error: any) {
+            console.log(error)
             toast.error(error.message || "Registration failed")
         }
     }

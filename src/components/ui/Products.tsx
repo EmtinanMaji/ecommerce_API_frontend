@@ -58,7 +58,7 @@ const Products = () => {
         :[...prevSelected, categoryId]
     )
     }
-    console.log(selectedCategories)
+    // console.log(selectedCategories)
 
     const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMinprice(Number(e.target.value))

@@ -42,9 +42,9 @@ export const fetchProducts = createAsyncThunk(
         const params = new URLSearchParams({
             pageNumber: pageNumber.toString(), 
             pageSize: pageSize.toString(), 
-            searchKeyword, 
             sortBy
     })
+    console.log(searchKeyword)
     selectedCategories.forEach((categoryId) => {
         params.append("SelectedCategories", categoryId)
     })
@@ -54,6 +54,9 @@ export const fetchProducts = createAsyncThunk(
 
     if (maxPrice !== undefined) {
       params.append("MaxPrice", maxPrice.toString())
+    }
+    if(searchKeyword){
+        params.append("SearchKeyword", searchKeyword)
     }
     const response = await api.get("/products", {params})
     return response.data
