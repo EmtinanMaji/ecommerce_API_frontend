@@ -140,6 +140,7 @@ const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined)
     setValue("description", product.description)
     setValue("price", product.price)
     setValue("quantity", product.quantity)
+    setValue("sold", product.sold)
     setValue("shipping", product.shipping)
     setValue("categoryId", product.categoryId)
 
@@ -198,6 +199,14 @@ const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined)
                     </div>
 
                     <div className="form-field">
+                    <label htmlFor="sold"> Sold: </label>
+                    <input type="number" step="0.01" {... register("sold",{
+                        required: "Sold is required"
+                    })}/>
+                    {errors.sold && <p> {errors.sold.message} </p>}
+                    </div>
+
+                    <div className="form-field">
                     <label htmlFor="shipping"> Shipping: </label>
                     <input type="number" step="0.01" {... register("shipping",{
                         required: "Shipping is required"
@@ -205,13 +214,12 @@ const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined)
                     {errors.shipping && <p> {errors.shipping.message} </p>}
                     </div>
 
-                    <div className="form-field"> 
+                    <div className="form-field">
                     <label htmlFor="image"> Image: </label>
-                    <input type="file" accept="image/*" {... register("imageUrl")} onChange={handleImageChange}/>
-                    {/* {imagePreview && <img src={imagePreview} alt="image preview"
-                    className="table-img" />} */}
+                    <input type="text" />
                     </div>
-                    <br />
+                    
+                    
                     
                     <div className="form-field">
               <label htmlFor="categoryIds"> Category: </label>

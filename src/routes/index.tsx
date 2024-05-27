@@ -17,6 +17,7 @@ import { AdminProducts } from "@/components/ui/AdminProducts";
 import { AdminCategories } from "@/components/ui/AdminCategories";
 import ProtectedRoute from "./ProtectedRoute";
 import AdminRoute from "./AdminRoute";
+import { Cart } from "@/pages";
 
 const Index = () => {
     return(
@@ -27,6 +28,7 @@ const Index = () => {
                 <Route path="/products/:slug" element={<ProductDetails />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/cart" element={<Cart />} />
 
                 <Route element={<ProtectedRoute />}>
                     <Route path="/dashboard/user" element={<UserDashboard />} />

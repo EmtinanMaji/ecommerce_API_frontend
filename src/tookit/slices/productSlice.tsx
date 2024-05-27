@@ -144,6 +144,7 @@ const productSlice = createSlice({
         foundProduct.description = action.payload.data.description
         foundProduct.price = action.payload.data.price
         foundProduct.quantity = action.payload.data.quantity
+        foundProduct.sold = action.payload.data.sold
         foundProduct.shipping = action.payload.data.shipping
         foundProduct.categoryId = action.payload.data.categoryId
       }

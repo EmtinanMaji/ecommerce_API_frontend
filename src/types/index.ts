@@ -20,6 +20,7 @@ export type CategoryState = {
 }
 // //products
 export type Product = {
+    orderQuantity: number;
     productId: string
     name: string
     slug: string
@@ -105,6 +106,7 @@ export type CreateProductFormData = {
     description: string
     price: number
     quantity: number
+    sold: number
     shipping: number
     categoryId: string
 }
@@ -122,44 +124,27 @@ export type CreateCategoryFormData = {
     description: string;
 }
 
+export type CartItem = Product & { orderQuantity: number }
 
-// export type CartState = {
-//   cartItems: Product[]
-// }
+export type CartState = {
+  cartItems: Product[]
+}
 
 
+export type Order = {
+  orderId: string
+  userId?: string
+  orderStatus: string
+  orderTotal: number
+  orderDate: string
+  // orderItems: OrderItems[]
+}
 
-// export type OrderProduct = {
-//   orderProductId: string
-//   orderId: string
-//   productId: string
-//   productQuantity: number
-//   product: {
-//     productId: string
-//     name: string
-//     price: number
-//   }
-// }
-// export type Order = {
-//   orderId: string
-//   date: string
-//   userName: string
-//   userId?: string
-//   totalPrice: number
-//   orderStatus: string
-//   orderProducts: OrderProduct[]
-// }
+export type OrderState = {
+  orders: Order[]
+  totalPages: number
+  order: Order | null
+  error: string | null
+  isLoading: boolean
+}
 
-// export type OrderState = {
-//   orders: Order[]
-//   order: Order | null
-//   error: string | null
-//   isLoading: boolean
-// }
-
-// export type NewOrder = {
-//   userId?: string
-//   userName: string
-//   orderItems: { productId: string; quantity: number }[]
-//   totalPrice: number
-// }

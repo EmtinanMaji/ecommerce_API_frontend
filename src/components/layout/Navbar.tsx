@@ -3,10 +3,13 @@ import { AppDispatch, RootState } from "@/tookit/store";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import CartIcon from "../ui/CartIcon";
+import useCartState from "@/hooks/useCartState";
 
 export const Navbar = () => {
     const dispatch: AppDispatch = useDispatch()
-    const {isLoggedIn} = useSelector((state: RootState) => state.userR)
+    const { isLoggedIn } = useSelector((state: RootState) => state.userR)
+    const { cartItems } = useCartState()
     const handleLogout = () => {
         dispatch(logoutUser())
     }
@@ -32,7 +35,9 @@ export const Navbar = () => {
                         <Link to="/login">Login</Link>
                     </li>
                 </>)}
-
+                    <li>
+                        <Link to="/cart"> <CartIcon value={cartItems && cartItems.length>0 ? cartItems.length : 0}/> </Link>
+                    </li>
                 
                 
             </ul>
