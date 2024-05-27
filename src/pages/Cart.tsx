@@ -1,28 +1,29 @@
 import PageTitle from "@/components/ui/PageTitle"
 import useCartState from "@/hooks/useCartState"
 import useUsersState from "@/hooks/useUsersState"
-import { decrementQuantity, incrementQuantity, removeAllFromCart, removeFromCart } from "@/tookit/slices/cartSlice"
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeAllFromCart,
+  removeFromCart
+} from "@/tookit/slices/cartSlice"
 import { AppDispatch } from "@/tookit/store"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
-
 export const Cart = () => {
-    
   const { cartItems } = useCartState()
-  
+
   const { userData, isLoggedIn } = useUsersState()
-  
+
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate()
-
-
 
   const handleRemoveAllProductsFromCart = () => {
     dispatch(removeAllFromCart())
   }
 
-  const handelRemoveFromCart  = (productId: string) => {
+  const handelRemoveFromCart = (productId: string) => {
     if (productId) {
       dispatch(removeFromCart(productId))
     }
@@ -32,62 +33,60 @@ export const Cart = () => {
     if (productId) {
       dispatch(incrementQuantity(productId))
     }
+  }
+  const handelDecrementQuantity = (productId?: string) => {
+    if (productId) {
+      dispatch(decrementQuantity(productId))
     }
-    const handelDecrementQuantity = (productId?: string) => {
-      if (productId) {
-        dispatch(decrementQuantity(productId))
-      }
-    }
+  }
 
-const cartTotal = () => {
+  const cartTotal = () => {
     let total = 0
     cartItems && cartItems.map((cartItem) => (total += cartItem.price * cartItem.orderQuantity))
     return total
   }
 
+  // const handlePlaceOrder = async () => {
+  //   if (!isLoggedIn || !userData || !userData.userId) {
+  //     alert("Please log in to place an order.")
+  //     return
+  //   }
 
+  //   const newOrder = {
+  //     userId: userData.userId,
+  //     userName: userData.name,
+  //     products: cartItems.map((item) => ({
+  //       productId: item.productId,
+  //       productQuantity: item.orderQuantity
+  //     })),
+  //     totalPrice: parseFloat(calculateTotal())
+  //   }
 
-// const handlePlaceOrder = async () => {
-//   if (!isLoggedIn || !userData || !userData.userId) {
-//     alert("Please log in to place an order.")
-//     return
-//   }
+  //   try {
 
-//   const newOrder = {
-//     userId: userData.userId,
-//     userName: userData.name,
-//     products: cartItems.map((item) => ({
-//       productId: item.productId,
-//       productQuantity: item.orderQuantity
-//     })),
-//     totalPrice: parseFloat(calculateTotal())
-//   }
+  //     const response = await api.post("/orders", newOrder, {
+  //       headers: {
+  //         Authorization: `Bearer ${getToken()}`
+  //       }
+  //     })
+  //     console.log("Order response:", response.data)
 
-//   try {
-
-//     const response = await api.post("/orders", newOrder, {
-//       headers: {
-//         Authorization: `Bearer ${getToken()}`
-//       }
-//     })
-//     console.log("Order response:", response.data)
-
-//     setTimeout(async () => {
-//       try {
-//         const ordersResponse = await dispatch(addOrders(userData.userId)).unwrap()
-//         console.log("Fetched orders after placing order:", ordersResponse)
-//       } catch (fetchError) {
-//         console.error("Failed to fetch orders:", fetchError)
-//       }
-//     }, 1000)
-// setIsModalOpen(true)
-//     dispatch(removeAllFromCart()) 
-//     navigate("/dashboard/user/orders")
-//   } catch (error) {
-//     console.error("Failed to place order:", error)
-//     alert("Failed to place order.")
-//   }
-// }
+  //     setTimeout(async () => {
+  //       try {
+  //         const ordersResponse = await dispatch(addOrders(userData.userId)).unwrap()
+  //         console.log("Fetched orders after placing order:", ordersResponse)
+  //       } catch (fetchError) {
+  //         console.error("Failed to fetch orders:", fetchError)
+  //       }
+  //     }, 1000)
+  // setIsModalOpen(true)
+  //     dispatch(removeAllFromCart())
+  //     navigate("/dashboard/user/orders")
+  //   } catch (error) {
+  //     console.error("Failed to place order:", error)
+  //     alert("Failed to place order.")
+  //   }
+  // }
 
   return (
     <div className="cart">
@@ -106,7 +105,12 @@ const cartTotal = () => {
               Remove all items
               <i className="fas fa-trash-alt"></i>
             </button>
-            <button className="btn" onClick={() => {navigate("/")}}>
+            <button
+              className="btn"
+              onClick={() => {
+                navigate("/")
+              }}
+            >
               Continue shopping
             </button>
           </div>
@@ -127,7 +131,8 @@ const cartTotal = () => {
                       <button
                         onClick={() => {
                           handelIncrementQuantity(cartItem.productId)
-                        }}disabled= {cartItem.quantity == cartItem.orderQuantity}
+                        }}
+                        disabled={cartItem.quantity == cartItem.orderQuantity}
                       >
                         +
                       </button>
@@ -155,8 +160,8 @@ const cartTotal = () => {
               ))}
             </div>
             <div className="cart_summary">
-               <h3>Cart Summary</h3>
-                <h4>Total: {cartTotal()} $</h4>
+              <h3>Cart Summary</h3>
+              <h4>Total: {cartTotal()} $</h4>
               {isLoggedIn ? (
                 <div>
                   <p>{userData && userData.address}</p>
@@ -170,9 +175,9 @@ const cartTotal = () => {
                   <br />
                   <button>Pay here</button>
                 </div>
-                ) : (
+              ) : (
                 <h3>login first for placing the order and the delivery address</h3>
-                )}
+              )}
             </div>
           </div>
         </>
@@ -180,8 +185,5 @@ const cartTotal = () => {
         <p>No items in the cart</p>
       )}
     </div>
-  )}
-
-
-
-              
+  )
+}

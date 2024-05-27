@@ -1,20 +1,19 @@
-
-import {CartItem, CartState, Product} from "@/types";
-import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {  CartState, Product } from "@/types"
+import { getLocalStorage, setLocalStorage } from "@/utils/localStorage"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 const data = getLocalStorage("cart", { cartItems: [] })
 
 const initialState: CartState = {
-    cartItems: data.cartItems
+  cartItems: data.cartItems
 }
 
 const cartSlice = createSlice({
-    name: "cart",
-    initialState: initialState,
-    reducers: {
-        addToCart:(state, action: PayloadAction<Product>) => {
-            if (state.cartItems) {
+  name: "cart",
+  initialState: initialState,
+  reducers: {
+    addToCart: (state, action: PayloadAction<Product>) => {
+      if (state.cartItems) {
         const existingItem = state.cartItems.find(
           (item) => item.productId === action.payload.productId
         )
@@ -30,7 +29,6 @@ const cartSlice = createSlice({
       }
     },
 
-            
     incrementQuantity: (state, action: PayloadAction<string>) => {
       const item = state.cartItems.find((cartItem) => cartItem.productId === action.payload)
       if (item) {
@@ -46,19 +44,23 @@ const cartSlice = createSlice({
       }
       setLocalStorage("cart", state.cartItems)
     },
-        
-        removeFromCart: (state, action: PayloadAction<string>) => {
+
+    removeFromCart: (state, action: PayloadAction<string>) => {
       state.cartItems = state.cartItems.filter((cartItem) => cartItem.productId !== action.payload)
       setLocalStorage("cart", state.cartItems)
     },
-        removeAllFromCart:(state) => {
-            state.cartItems = []
-            setLocalStorage("cart",  state.cartItems )
-        }
-    }, 
-    
-    
+    removeAllFromCart: (state) => {
+      state.cartItems = []
+      setLocalStorage("cart", state.cartItems)
+    }
+  }
 })
 
-export const { addToCart, removeFromCart, removeAllFromCart, incrementQuantity, decrementQuantity  } = cartSlice.actions
+export const {
+  addToCart,
+  removeFromCart,
+  removeAllFromCart,
+  incrementQuantity,
+  decrementQuantity
+} = cartSlice.actions
 export default cartSlice.reducer

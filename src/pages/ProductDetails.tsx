@@ -1,58 +1,61 @@
-import PageTitle from "@/components/ui/PageTitle";
-import { addToCart } from "@/tookit/slices/cartSlice";
-import { fetchProductBySlug  } from "@/tookit/slices/productSlice";
-import { AppDispatch, RootState } from "@/tookit/store";
-import { Product } from "@/types";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import PageTitle from "@/components/ui/PageTitle"
+import { addToCart } from "@/tookit/slices/cartSlice"
+import { fetchProductBySlug } from "@/tookit/slices/productSlice"
+import { AppDispatch, RootState } from "@/tookit/store"
+import { Product } from "@/types"
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
 
-export const ProductDetails = () =>{
-    const {slug} = useParams <{ slug: string }>()
-    const { product, isLoading, error } = useSelector((state: RootState) => state.productR)
+export const ProductDetails = () => {
+  const { slug } = useParams<{ slug: string }>()
+  const { product, isLoading, error } = useSelector((state: RootState) => state.productR)
 
-    const dispatch: AppDispatch = useDispatch()
-    const handelAddToCart = (product: Product) => {
+  const dispatch: AppDispatch = useDispatch()
+  const handelAddToCart = (product: Product) => {
     dispatch(addToCart(product))
   }
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            await dispatch(fetchProductBySlug(slug))
-        }
-        fetchData()
-    },[]);
 
-    return(
-        <div>
-            <PageTitle title="Product Details"/>
-            <article className="products-details">
-                <h2>Products</h2>
-                {isLoading && <p>Loading...</p>}
-                {error && <p>Eroor{error}</p>}
-                <section className="products">
-                    {product && <div>
-                        <img src={product.imageUrl} alt={product.name} className="product-details__img"/>
-                        <div className="product-details__bady">
-                            <h3 className="product-details__name">Product Name: {product.name}</h3>
-                            <p className="product-details__description">Product description: {product.description}</p>
-                            <p className="product-details__quantity">Quantity: {product.quantity}</p>
-                            <p className="product-details__sold">Sold: {product.sold}</p>
-                            <p className="product-details__price">Price: {product.price} SAR</p>
-                            <p>Product Added: {new Date(product.createdAt).toLocaleDateString()}</p>
-                             <button
-                className="btn product_btn"
-                onClick={() => {
-                  handelAddToCart(product)
-                }}
-              >
-                Add To Cart
-              </button>
-                        </div>
-                    </div>}
-                </section>
-            </article>
-        
-        </div>
-    )
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(fetchProductBySlug(slug))
+    }
+    fetchData()
+  }, [])
+
+  return (
+    <div>
+      <PageTitle title="Product Details" />
+      <article className="products-details">
+        <h2>Products</h2>
+        {isLoading && <p>Loading...</p>}
+        {error && <p>Eroor{error}</p>}
+        <section className="products">
+          {product && (
+            <div>
+              <img src={product.imageUrl} alt={product.name} className="product-details__img" />
+              <div className="product-details__bady">
+                <h3 className="product-details__name">Product Name: {product.name}</h3>
+                <p className="product-details__description">
+                  Product description: {product.description}
+                </p>
+                <p className="product-details__quantity">Quantity: {product.quantity}</p>
+                <p className="product-details__sold">Sold: {product.sold}</p>
+                <p className="product-details__price">Price: {product.price} SAR</p>
+                <p>Product Added: {new Date(product.createdAt).toLocaleDateString()}</p>
+                <button
+                  className="btn product_btn"
+                  onClick={() => {
+                    handelAddToCart(product)
+                  }}
+                >
+                  Add To Cart
+                </button>
+              </div>
+            </div>
+          )}
+        </section>
+      </article>
+    </div>
+  )
 }
