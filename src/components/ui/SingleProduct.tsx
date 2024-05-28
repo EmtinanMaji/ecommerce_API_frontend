@@ -26,7 +26,7 @@ const SingleProduct = (props: { product: Product }) => {
             currency: "USD"
           })}
         </p>
-        <div>
+        <div >
           <Link to={`/products/${product.productId}`}>
             <button className="btn product_btn">
               Show Details

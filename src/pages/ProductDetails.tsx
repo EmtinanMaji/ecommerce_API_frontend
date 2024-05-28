@@ -24,16 +24,17 @@ export const ProductDetails = () => {
   }, [])
 
   return (
-    <div>
+    <div className="products-det">
       <PageTitle title="Product Details" />
       <article className="products-details">
-        <h2>Products</h2>
+        <h2 className="text-lg font-bold">Product Details</h2>
         {isLoading && <p>Loading...</p>}
         {error && <p>Eroor{error}</p>}
         <section className="products">
           {product && (
-            <div>
+            <div className="product-content">
               <img src={product.imageUrl} alt={product.name} className="product-details__img" />
+
               <div className="product-details__bady">
                 <h3 className="product-details__name">Product Name: {product.name}</h3>
                 <p className="product-details__description">
@@ -44,7 +45,7 @@ export const ProductDetails = () => {
                 <p className="product-details__price">Price: {product.price} SAR</p>
                 <p>Product Added: {new Date(product.createdAt).toLocaleDateString()}</p>
                 <button
-                  className="btn product_btn"
+                  className="product-details__btn"
                   onClick={() => {
                     handelAddToCart(product)
                   }}

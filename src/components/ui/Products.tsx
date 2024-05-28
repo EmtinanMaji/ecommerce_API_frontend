@@ -16,7 +16,7 @@ const Products = () => {
   const dispatch: AppDispatch = useDispatch()
 
   const [pageNumber, setPageNumber] = useState(1)
-  const [pageSize] = useState(5)
+  const [pageSize] = useState(4)
   const [searchKeyword, setSearchKeyword] = useState("")
   const [sortBy, setSortBy] = useState("Name")
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
@@ -81,35 +81,39 @@ const Products = () => {
   }
 
   return (
-    <div>
+    <div className="container-p">
       <div className="sidebar">
-        <div>
+        <div className="filter-section">
           <h3>Filter by Category goes here</h3>
-          {categories &&
-            categories.length > 0 &&
-            categories.map((category) => (
-              <div key={category.categoryId}>
-                <label htmlFor="categories">
-                  <input
-                    type="checkbox"
-                    value={category.categoryId}
-                    checked={selectedCategories.includes(category.categoryId)}
-                    onChange={() => handleCategoryChange(category.categoryId)}
-                  />{" "}
-                  {category.name}
-                </label>
-              </div>
-            ))}
+          <div className="categories">
+            {categories &&
+              categories.length > 0 &&
+              categories.map((category) => (
+                <div className="category" key={category.categoryId}>
+                  <label htmlFor="categories">
+                    <input
+                      type="checkbox"
+                      value={category.categoryId}
+                      checked={selectedCategories.includes(category.categoryId)}
+                      onChange={() => handleCategoryChange(category.categoryId)}
+                    />
+                    {/* {" "} */}
+                    
+                    {category.name}
+                  </label>
+                </div>
+              ))}
+          </div>
         </div>
-        <div>
+        <div className="filter-section">
           <h3>Filter by Price goes here</h3>
-          <div>
+          <div className="price-filter">
             <label htmlFor="min-price">
               Min Price:
               <input type="text" name="min-price" id="min-price" onChange={handleMinPriceChange} />
             </label>
           </div>
-          <div>
+          <div className="price-filter">
             <label htmlFor="max-price">
               Max Price:
               <input type="text" name="max-price" id="max-price" onChange={handleMaxPriceChange} />
@@ -118,11 +122,11 @@ const Products = () => {
         </div>
       </div>
 
-      <div>
+      <div className="main-content">
         <h2>Products</h2>
         {isLoading && <p>Loading...</p>}
         {error && <p>Eroor{error}</p>}
-        <div>
+        <div className="search-sort">
           <input
             type="text"
             placeholder="Search Products"

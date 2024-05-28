@@ -22,8 +22,9 @@ export const Navbar = () => {
       <ul className="flex h-16 w-full items-center justify-between px-4 md:px-6">
         <li>
           <Link className="flex items-center gap-2" to="/">
+            <img src="src\imeges\Bloom & Grow Logo -G.png" className="logo" alt="Logo"></img>
             {/* Logo <MountainIcon className="h-6 w-6" /> */}
-            <span className="text-lg font-bold">Home</span>
+            <span className="text-lg font-bold">Bloom & Grow</span>
           </Link>
         </li>
 
@@ -98,7 +99,6 @@ export const Navbar = () => {
             <Link to="/cart">
               {" "}
               <CartIcon value={cartItems && cartItems.length > 0 ? cartItems.length : 0} />{" "}
-              
             </Link>
           </li>
         </div>
