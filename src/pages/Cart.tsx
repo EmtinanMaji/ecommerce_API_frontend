@@ -91,22 +91,19 @@ export const Cart = () => {
   return (
     <div className="cart">
       <PageTitle title={"Cart"} />
-      {/* {isModalOpen && (
-        <OrderConfirmationModal
-          onClose={() => setIsModalOpen(false)}
 
-        />
-      )} */}
       {cartItems && cartItems.length > 0 ? (
         <>
-          <div className="cart_heading card">
+          <div className="cart_heading">
             <h2>Shopping Cart [{cartItems.length}]</h2>
-            <button className="btn" onClick={handleRemoveAllProductsFromCart}>
-              Remove all items
-              <i className="fas fa-trash-alt"></i>
-            </button>
+            <div className="cart_item_btn">
+              <button onClick={handleRemoveAllProductsFromCart}>
+                Remove all items
+                <i className="fas fa-trash-alt"></i>
+              </button>
+            </div>
             <button
-              className="btn"
+              className="cart_back_btn"
               onClick={() => {
                 navigate("/")
               }}
@@ -114,10 +111,10 @@ export const Cart = () => {
               Continue shopping
             </button>
           </div>
-          <div className="cart_body card">
+          <div className="cart_body">
             <div className="cart_items">
               {cartItems.map((cartItem) => (
-                <div className="cart_item card" key={cartItem.productId}>
+                <div className="cart_item" key={cartItem.productId}>
                   <div className="cart_item_left">
                     <img className="cart_img" src={cartItem.imageUrl} alt={cartItem.name} />
                   </div>
@@ -153,7 +150,7 @@ export const Cart = () => {
                         handelRemoveFromCart(cartItem.productId)
                       }}
                     >
-                      Remove
+                      <i className="fas fa-trash-alt"></i>
                     </button>
                   </div>
                 </div>

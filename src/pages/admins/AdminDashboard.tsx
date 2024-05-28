@@ -3,9 +3,13 @@ import React from "react"
 
 export const AdminDashboard = () => {
   return (
-    <div className="container">
-      <AdminSidebar />
-      <div className="main-container">main content goes here</div>
+    <div className="layout">
+      <div>
+        <AdminSidebar />
+      </div>
+      <div className="main-container">
+        <div className="profile-info">{"Hello, everything is here for you. Enjoy :)"}</div>
+      </div>
     </div>
   )
 }

@@ -58,7 +58,7 @@ export const Register = () => {
 
   return (
     <div className="screen">
-      <div className="container">
+      <div className="container-lr">
         <PageTitle title="Register" />
         <h2 className="text">Create account</h2>
         {/* <h2>User Registeration</h2> */}

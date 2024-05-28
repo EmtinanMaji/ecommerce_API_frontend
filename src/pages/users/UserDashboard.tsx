@@ -3,9 +3,11 @@ import React from "react"
 
 export const UserDashboard = () => {
   return (
-    <div className="container">
+    <div className="admin-container">
       <UserSidebar />
-      <div className="main-container">main content goes here</div>
+      <div className="main-content">
+        <div className="profile-info">{"Hello, everything is here for you. Enjoy :)"}</div>
+      </div>
     </div>
   )
 }

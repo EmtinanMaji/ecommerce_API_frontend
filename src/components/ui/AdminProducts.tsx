@@ -160,12 +160,12 @@ export const AdminProducts = () => {
   }
 
   return (
-    <div className="container">
+    <div className="admin-container">
       <AdminSidebar />
-      <div className="main-container">
+      <div className="main-content">
         {isLoading && <p>Loading...</p>}
         {error && <p>Eroor{error}</p>}
-        <div>
+        <div className="search-sort">
           <input
             type="text"
             placeholder="Search Product"
@@ -179,13 +179,14 @@ export const AdminProducts = () => {
           </select>
         </div>
         {/* create or edite Product */}
-        <div>
+        <div className="category-form">
           <h2>{isEdit ? "Edit Product" : "Create Product"}</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-field">
               <label htmlFor="name"> Name: </label>
               <input
                 type="text"
+                placeholder="Enter Product Name"
                 {...register("name", {
                   required: "Name is required",
                   minLength: { value: 2, message: "Name must be at least 2 characters" }
@@ -196,14 +197,18 @@ export const AdminProducts = () => {
 
             <div className="form-field">
               <label htmlFor="description"> Description: </label>
-              <textarea {...register("description")}></textarea>
+              <textarea
+                placeholder="Enter Product Description"
+                {...register("description")}
+              ></textarea>
             </div>
 
             <div className="form-field">
               <label htmlFor="price"> Price: </label>
               <input
+                placeholder="Enter Product Price"
                 type="number"
-                step="0.01"
+                step="0.1"
                 {...register("price", {
                   required: "Price is required"
                 })}
@@ -214,8 +219,9 @@ export const AdminProducts = () => {
             <div className="form-field">
               <label htmlFor="quantity"> Quantity: </label>
               <input
+                placeholder="Enter Product Quantity"
                 type="number"
-                step="0.01"
+                step="0.1"
                 {...register("quantity", {
                   required: "Quantity is required"
                 })}
@@ -226,8 +232,9 @@ export const AdminProducts = () => {
             <div className="form-field">
               <label htmlFor="sold"> Sold: </label>
               <input
+                placeholder="Enter Product Sold"
                 type="number"
-                step="0.01"
+                step="0.1"
                 {...register("sold", {
                   required: "Sold is required"
                 })}
@@ -238,8 +245,9 @@ export const AdminProducts = () => {
             <div className="form-field">
               <label htmlFor="shipping"> Shipping: </label>
               <input
+                placeholder="Enter Product Shipping"
                 type="number"
-                step="0.01"
+                step="0.1"
                 {...register("shipping", {
                   required: "Shipping is required"
                 })}
@@ -288,7 +296,7 @@ export const AdminProducts = () => {
           </form>
         </div>
         <h2>List of Product: </h2>
-        <table>
+        <table className="categories-table">
           <thead>
             <tr>
               <th>Image</th>
@@ -306,7 +314,7 @@ export const AdminProducts = () => {
               products.map((product) => (
                 <tr key={product.productId}>
                   <td>
-                    <img src={product.imageUrl} alt={product.slug} />
+                    <img className="img-a-p" src={product.imageUrl} alt={product.slug} />
                   </td>
                   <td>{product.name}</td>
                   <td>{JSON.stringify(product.category?.name)}</td>
@@ -323,7 +331,7 @@ export const AdminProducts = () => {
                       Edit
                     </button>
                     <button
-                      className="btn"
+                      className="btn-delete"
                       onClick={() => {
                         handleDelete(product.productId)
                       }}

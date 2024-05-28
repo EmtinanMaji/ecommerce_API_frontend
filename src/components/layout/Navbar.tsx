@@ -22,27 +22,20 @@ export const Navbar = () => {
       <ul className="flex h-16 w-full items-center justify-between px-4 md:px-6">
         <li>
           <Link className="flex items-center gap-2" to="/">
-            <img src="src\imeges\Bloom & Grow Logo -G.png" className="logo" alt="Logo"></img>
+            <img
+              src="https://res.cloudinary.com/emtinan-cloud/image/upload/v1716933439/e-commerce-sda2/aqm5umgshhg0hudqrtw4.png"
+              className="logo"
+              alt="Logo"
+            ></img>
             {/* Logo <MountainIcon className="h-6 w-6" /> */}
             <span className="text-lg font-bold">Bloom & Grow</span>
           </Link>
         </li>
 
-        <div className="flex items-center gap-4">
+        <div className="drop-menu">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button className="rounded-full" size="icon" variant="ghost">
-                {/* <img
-                  alt="Avatar"
-                  className="rounded-full"
-                  height="32"
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: "32/32",
-                    objectFit: "cover"
-                  }}
-                  width="32"
-                /> */}
                 <FaCircleUser />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
@@ -88,41 +81,14 @@ export const Navbar = () => {
               </DropdownMenuContent>
             )}
           </DropdownMenu>
-          {/* <Link className="relative" href="#">
-            <ShoppingCartIcon className="h-6 w-6" />
-            <span className="absolute -top-2 -right-2 bg-primary text-white rounded-full px-2 py-0.5 text-xs font-medium">
-              3
-            </span>
-            <span className="sr-only">Cart</span>
-          </Link> */}
-          <li>
+
+          <li className="cart-link">
             <Link to="/cart">
               {" "}
               <CartIcon value={cartItems && cartItems.length > 0 ? cartItems.length : 0} />{" "}
             </Link>
           </li>
         </div>
-
-        {/* {isLoggedIn && (
-          <>
-            <li>
-              <Link to="/" onClick={handleLogout}>
-                Logout
-              </Link>
-            </li>
-          </>
-        )}
-
-        {!isLoggedIn && (
-          <>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          </>
-        )} */}
       </ul>
     </nav>
   )

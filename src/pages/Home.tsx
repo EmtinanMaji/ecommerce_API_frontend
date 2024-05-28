@@ -8,12 +8,10 @@ export const Home = () => {
     <div>
       <PageTitle title="Home" />
       <section className="hero-section" id="hero">
-        <div className="content">
-          <h1 className="welcome-text">Welcome to Todo</h1>
-          <p className="hero-text">
-            Manage your tasks effectively with our simple and intuitive Todo web.
-          </p>
-          <button>Shop now</button>
+        <div >
+          <h1 className="welcome-text">Welcome to Bloom & Grow</h1>
+          <p className="hero-text">--Your Destination for Greenery--</p>
+          {/* <button>Shop now</button> */}
         </div>
       </section>
 

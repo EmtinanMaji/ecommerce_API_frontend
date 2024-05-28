@@ -48,27 +48,28 @@ export const AdminUsersManagement = () => {
   }
 
   return (
-    <div className="container">
+    <div className="admin-container">
       <AdminSidebar />
-      <div className="main-container">
+      <div className="main-content">
         {isLoading && <p>Loading...</p>}
         {error && <p>Eroor{error}</p>}
-        <div>
+        <div className="search-sort">
           <input
             type="text"
-            placeholder="Search Categories"
+            placeholder="Search Users"
             value={searchKeyword}
             onChange={handleSearchChange}
           />
           <p>Stor By:</p>
           <select name="" id="" onChange={handleSortChange}>
             <option value="Name">Name</option>
-            <option value="Price">Price</option>
+            <option value="isAdmin">Admin first</option>
+            <option value="isBanned">Banned first</option>
           </select>
         </div>
 
         <h2>List of Users: </h2>
-        <table>
+        <table className="categories-table">
           <thead>
             <tr>
               <th>Name</th>

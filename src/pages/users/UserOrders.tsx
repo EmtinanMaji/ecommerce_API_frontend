@@ -3,9 +3,11 @@ import React from "react"
 
 export const UserOrders = () => {
   return (
-    <div className="container">
+    <div className="admin-container">
       <UserSidebar />
-      <div className="main-container">Order goes here</div>
+      <div className="main-content">
+        <div className="profile-info">You did not have any order to display</div>
+      </div>
     </div>
   )
 }

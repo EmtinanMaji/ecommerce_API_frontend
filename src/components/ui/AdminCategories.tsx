@@ -1,7 +1,7 @@
 import AdminSidebar from "@/components/ui/AdminSidebar"
-import { AppDispatch} from "@/tookit/store"
+import { AppDispatch } from "@/tookit/store"
 import React, { useEffect, useState } from "react"
-import { useDispatch} from "react-redux"
+import { useDispatch } from "react-redux"
 import useCategoriesState from "@/hooks/useCategoriesState"
 import {
   createCategory,
@@ -86,12 +86,13 @@ export const AdminCategories = () => {
   }
 
   return (
-    <div className="container">
+    <div className="admin-container">
       <AdminSidebar />
-      <div className="main-container">
+
+      <div className="main-content">
         {isLoading && <p>Loading...</p>}
         {error && <p>Eroor{error}</p>}
-        <div>
+        <div className="search-sort">
           <input
             type="text"
             placeholder="Search Categories"
@@ -101,16 +102,17 @@ export const AdminCategories = () => {
           <p>Stor By:</p>
           <select name="" id="" onChange={handleSortChange}>
             <option value="Name">Name</option>
-            <option value="CreatedAt">CreatedAt</option>
+            <option value="CreatedAt">Created first</option>
           </select>
         </div>
         {/* create or edite category */}
-        <div>
+        <div className="category-form">
           <h2>{isEdit ? "Edit Category" : "Create Category"}</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-field">
               <label htmlFor="name"> Name: </label>
               <input
+                placeholder="Enter Category Name"
                 type="text"
                 {...register("name", {
                   required: "Name is required",
@@ -122,7 +124,10 @@ export const AdminCategories = () => {
 
             <div className="form-field">
               <label htmlFor="description"> Description: </label>
-              <textarea {...register("description")}></textarea>
+              <textarea
+                placeholder="Enter Category Description"
+                {...register("description")}
+              ></textarea>
             </div>
 
             <button className="btn" type="submit">
@@ -131,7 +136,7 @@ export const AdminCategories = () => {
           </form>
         </div>
         <h2>List of categories: </h2>
-        <table>
+        <table className="categories-table">
           <thead>
             <tr>
               <th>Name</th>
@@ -156,7 +161,7 @@ export const AdminCategories = () => {
                       Edit
                     </button>
                     <button
-                      className="btn"
+                      className="btn-delete"
                       onClick={() => {
                         handleDelete(category.categoryId)
                       }}

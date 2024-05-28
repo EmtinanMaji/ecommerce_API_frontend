@@ -34,50 +34,53 @@ export const UserProfile = () => {
   }
 
   return (
-    <div className="container">
+    <div className="admin-container">
       <UserSidebar />
-      <div className="main-container">
-        {userData && (
-          <>
-            <img src={userData.image} alt={userData.name} className="round-img" />
-            <h3>Name: {userData.name}</h3>
-            <p>Email: {userData.email}</p>
-            <p>Address: {userData.address}</p>
-            <button
-              className="btn"
-              onClick={() => {
-                setIsFromOpen(!isFromOpen)
-              }}
-            >
-              {isFromOpen ? "Close Edit Profile" : "Edit Profile"}
-            </button>
+      <div className="main-content">
+        <div className="profile-info">
+          {userData && (
+            <>
+              <img src={userData.image} alt={userData.name} className="round-img" />
 
-            {isFromOpen && (
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-field">
-                  <label htmlFor="name"> Name: </label>
-                  <input
-                    type="text"
-                    {...register("name", {
-                      required: "Name is required",
-                      minLength: { value: 2, message: "Name must be at least 2 characters" }
-                    })}
-                  />
-                  {errors.name && <p> {errors.name.message} </p>}
-                </div>
+              <h3>Name: {userData.name}</h3>
+              <p>Email: {userData.email}</p>
+              <p>Address: {userData.address}</p>
+              <button
+                className="btn"
+                onClick={() => {
+                  setIsFromOpen(!isFromOpen)
+                }}
+              >
+                {isFromOpen ? "Close Edit Profile" : "Edit Profile"}
+              </button>
 
-                <div className="form-field">
-                  <label htmlFor="address"> Address: </label>
-                  <textarea {...register("address")}></textarea>
-                </div>
+              {isFromOpen && (
+                <form className="edit-profile-form" onSubmit={handleSubmit(onSubmit)}>
+                  <div className="form-field">
+                    <label htmlFor="name"> Name: </label>
+                    <input
+                      type="text"
+                      {...register("name", {
+                        required: "Name is required",
+                        minLength: { value: 2, message: "Name must be at least 2 characters" }
+                      })}
+                    />
+                    {errors.name && <p> {errors.name.message} </p>}
+                  </div>
 
-                <button className="btn" type="submit">
-                  Update Profile
-                </button>
-              </form>
-            )}
-          </>
-        )}
+                  <div className="form-field">
+                    <label htmlFor="address"> Address: </label>
+                    <textarea {...register("address")}></textarea>
+                  </div>
+
+                  <button className="btn" type="submit">
+                    Update Profile
+                  </button>
+                </form>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   )

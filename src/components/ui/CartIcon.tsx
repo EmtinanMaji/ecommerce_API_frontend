@@ -3,9 +3,9 @@ import React from "react"
 import { FaCartPlus } from "react-icons/fa"
 const CartIcon = ({ value }: { value: number }) => {
   return (
-    <div>
+    <div className="cart-icon">
       <FaCartPlus />
-      <span>{value}</span>
+      <span className="badge">{value}</span>
     </div>
   )
 }

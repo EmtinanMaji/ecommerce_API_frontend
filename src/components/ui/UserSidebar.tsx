@@ -6,18 +6,18 @@ import { Link } from "react-router-dom"
 const UserSidebar = () => {
   const { userData } = useSelector((state: RootState) => state.userR)
   return (
-    <div>
-      <aside className="sidebar-container">
-        <div>
+    <div className="admin-profile-container">
+      <aside className="admin-sidebar">
+        <div className="admin-profile">
           <h2>User Profile</h2>
           <p>{userData?.name}</p>
           <p>{userData?.email}</p>
         </div>
-        <ul>
-          <li>
+        <ul className="admin-menu">
+          <li className="admin-menu-item">
             <Link to="/dashboard/user/profile">Profile</Link>
           </li>
-          <li>
+          <li className="admin-menu-item">
             <Link to="/dashboard/user/orders">Orders</Link>
           </li>
         </ul>

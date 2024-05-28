@@ -33,7 +33,7 @@ export const Login = () => {
 
   return (
     <div className="screen">
-      <div className="container">
+      <div className="container-lr">
         <PageTitle title="Login" />
 
         <h2 className="text">Welcome back!</h2>

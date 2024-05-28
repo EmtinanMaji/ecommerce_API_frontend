@@ -16,7 +16,7 @@ const Products = () => {
   const dispatch: AppDispatch = useDispatch()
 
   const [pageNumber, setPageNumber] = useState(1)
-  const [pageSize] = useState(4)
+  const [pageSize] = useState(3)
   const [searchKeyword, setSearchKeyword] = useState("")
   const [sortBy, setSortBy] = useState("Name")
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
@@ -98,7 +98,7 @@ const Products = () => {
                       onChange={() => handleCategoryChange(category.categoryId)}
                     />
                     {/* {" "} */}
-                    
+
                     {category.name}
                   </label>
                 </div>
@@ -110,13 +110,25 @@ const Products = () => {
           <div className="price-filter">
             <label htmlFor="min-price">
               Min Price:
-              <input type="text" name="min-price" id="min-price" onChange={handleMinPriceChange} />
+              <input
+                className="input"
+                type="text"
+                name="min-price"
+                id="min-price"
+                onChange={handleMinPriceChange}
+              />
             </label>
           </div>
           <div className="price-filter">
             <label htmlFor="max-price">
               Max Price:
-              <input type="text" name="max-price" id="max-price" onChange={handleMaxPriceChange} />
+              <input
+                className="input"
+                type="text"
+                name="max-price"
+                id="max-price"
+                onChange={handleMaxPriceChange}
+              />
             </label>
           </div>
         </div>
