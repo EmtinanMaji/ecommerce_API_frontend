@@ -68,11 +68,14 @@ export const fetchUsers = createAsyncThunk(
               }
             }
           )
-        : await api.get(`/users?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`, {
-            headers: {
-              Authorization: `Bearer ${getToken()}`
+        : await api.get(
+            `/users?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`,
+            {
+              headers: {
+                Authorization: `Bearer ${getToken()}`
+              }
             }
-          })
+          )
     return response.data
   }
 )

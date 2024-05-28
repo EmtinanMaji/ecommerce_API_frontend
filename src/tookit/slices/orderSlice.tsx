@@ -28,7 +28,9 @@ export const fetchOrders = createAsyncThunk(
         ? await api.get(
             `/orders?pageNumber=${pageNumber}&pageSize=${pageSize}&searchKeyword=${searchKeyword}&sortBy=${sortBy}`
           )
-        : await api.get(`/orders?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`)
+        : await api.get(
+            `/orders?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`
+          )
     return response.data
   }
 )

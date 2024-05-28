@@ -90,31 +90,36 @@ export const AdminProducts = () => {
   }
   const onSubmit: SubmitHandler<CreateProductFormData> = async (data) => {
     try {
-      let imageUrls =""
+      let imageUrls = ""
       if (data.imageUrl && data.imageUrl.length > 0) {
-          const file = data.imageUrl[0]
-          //upload the file to the cloudinary
-          imageUrls = await uploadImageToCloudinary(file)
+        const file = data.imageUrl[0]
+        //upload the file to the cloudinary
+        imageUrls = await uploadImageToCloudinary(file)
       }
 
       const productData = {
-          ... data,
-          image: imageUrls,
+        ...data,
+        imageUrl: imageUrls
       }
-
-      const response = await dispatch(createProduct(productData))
-      toast.success("Product has been updated successfully")
-      console.log(response)
-        reset()
-        setImagePreview(null)
-
-    //   if (isEdit) {
-    //     await dispatch(updateProduct({ updateProductData: data, productId: selectedProductId }))
-    //     setIsEdit(false)
-    //   } else {
-    //     await dispatch(createProduct(data))
-    //   }
-    //   reset()
+      if (isEdit) {
+        const response = await dispatch(
+          updateProduct({ updateProductData: productData, productId: selectedProductId })
+        )
+        if (response.payload) {
+          toast.success("Product has been update successfully")
+        } else {
+          toast.error("Failed to update product")
+        }
+      } else {
+        const response = await dispatch(createProduct(productData))
+        if (response.payload) {
+          toast.success("Product has been create successfully")
+        } else {
+          toast.error("Failed to create product")
+        }
+      }
+      reset()
+      setImagePreview(null)
     } catch (error) {
       console.log("Product creation failed")
       toast.error("Product creation failed")
@@ -131,8 +136,10 @@ export const AdminProducts = () => {
   const handleDelete = async (id: string) => {
     try {
       await dispatch(deleteProduct(id))
+      toast.success("Product has been deleted successfully")
     } catch (error) {
       console.log(error)
+      toast.error("Failed to delete product")
     }
   }
 
@@ -245,10 +252,15 @@ export const AdminProducts = () => {
               <input type="text" />
             </div> */}
             <div className="form-field">
-              <label htmlFor="image"> Image: </label>
-              <input type="file" accept="image/*" onChange={handleImageChange} />
+              <label htmlFor="imageUrl"> Image: </label>
+              <input
+                type="file"
+                accept="imageUrl/*"
+                {...register("imageUrl")}
+                onChange={handleImageChange}
+              />
               {imagePreview && (
-                <img className="image-preview" src={imagePreview} alt="imagePreview"></img>
+                <img src={imagePreview} alt="image preview" className="image-preview" />
               )}
             </div>
 

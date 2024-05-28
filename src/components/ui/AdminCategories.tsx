@@ -101,7 +101,7 @@ export const AdminCategories = () => {
           <p>Stor By:</p>
           <select name="" id="" onChange={handleSortChange}>
             <option value="Name">Name</option>
-            <option value="Price">Price</option>
+            <option value="CreatedAt">CreatedAt</option>
           </select>
         </div>
         {/* create or edite category */}

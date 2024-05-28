@@ -1,5 +1,5 @@
 import api from "@/api"
-import { CreateProductForBackend, CreateProductFormData, ProductState } from "@/types"
+import { CreateProductForBackend, CreateProductFormData, Product, ProductState } from "@/types"
 import { getToken } from "@/utils/localStorage"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
@@ -95,19 +95,19 @@ export const createProduct = createAsyncThunk(
   }
 )
 
+
 export const updateProduct = createAsyncThunk(
   "products/updateProduct",
   async ({
     updateProductData,
     productId
   }: {
-    updateProductData: CreateProductFormData
+    updateProductData: CreateProductForBackend
     productId: string
   }) => {
-    const token = getToken()
     const response = await api.put(`/products/${productId}`, updateProductData, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${getToken()}`
       }
     })
     return response.data
