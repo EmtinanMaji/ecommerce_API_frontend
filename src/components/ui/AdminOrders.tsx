@@ -102,28 +102,28 @@ export const AdminOrders = () => {
                     Update Order
                     </button>
                     </form> */}
-      </div>
-      <h2>List of order: </h2>
-      <table className="categories-table">
-        <thead>
-          <tr>
-            <th>userId</th>
-            <th>orderStatus</th>
-            <th>orderTotal</th>
-            <th>createdAt</th>
-            {/* <th>Actions</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {orders &&
-            orders.length > 0 &&
-            orders.map((order) => (
-              <tr key={order.orderId}>
-                <td>{order.userId}</td>
-                <td>{order.orderStatus}</td>
-                <td>{order.orderTotal}</td>
-                <td>{order.orderDate}</td>
-                {/* <td>
+
+        <h2>List of order: </h2>
+        <table className="categories-table">
+          <thead>
+            <tr>
+              <th>userId</th>
+              <th>orderStatus</th>
+              <th>orderTotal</th>
+              <th>createdAt</th>
+              {/* <th>Actions</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {orders &&
+              orders.length > 0 &&
+              orders.map((order) => (
+                <tr key={order.orderId}>
+                  <td>{order.userId}</td>
+                  <td>{order.orderStatus}</td>
+                  <td>{order.orderTotal}</td>
+                  <td>{order.orderDate}</td>
+                  {/* <td>
                                     <button className= "btn" 
                                     // onClick={() => {handleEdit(order)}}
                                     >
@@ -135,10 +135,11 @@ export const AdminOrders = () => {
                                     Delete
                                     </button>
                                 </td> */}
-              </tr>
-            ))}
-        </tbody>
-      </table>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      
 
       <div className="pagination">
         <button onClick={handlePreviousPage} disabled={pageNumber == 1}>
@@ -154,6 +155,6 @@ export const AdminOrders = () => {
         </button>
       </div>
     </div>
-    // </div>
+    </div>
   )
 }
