@@ -12,7 +12,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 
 export const Navbar = () => {
   const dispatch: AppDispatch = useDispatch()
-  const { isLoggedIn } = useSelector((state: RootState) => state.userR)
+  const { isLoggedIn, userData } = useSelector((state: RootState) => state.userR)
   const { cartItems } = useCartState()
   const handleLogout = () => {
     dispatch(logoutUser())
@@ -41,25 +41,48 @@ export const Navbar = () => {
               </Button>
             </DropdownMenuTrigger>
             {isLoggedIn && (
-              // <>
-              //   <li>
-              //     <Link to="/" onClick={handleLogout}>
-              //       Logout
-              //     </Link>
-              //   </li>
-              // </>
-              <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <Link to="/dashboard/user">My Account</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  {" "}
-                  <Link to="/" onClick={handleLogout}>
-                    Logout
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
+              <>
+                {userData?.isAdmin && (
+                  <>
+                    <li>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem>
+                          <Link to="/dashboard/user">My Account</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                          <Link to="/dashboard/admin">Dash</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                          {" "}
+                          <Link to="/" onClick={handleLogout}>
+                            Logout
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </li>
+                  </>
+                )}
+                {!userData?.isAdmin && (
+                  <>
+                    <li>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem>
+                          <Link to="/dashboard/user">My Account</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                          {" "}
+                          <Link to="/" onClick={handleLogout}>
+                            Logout
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </li>
+                  </>
+                )}
+              </>
             )}
 
             {!isLoggedIn && (
